@@ -5,11 +5,19 @@ import {FormBuilder, Validators, FormGroup} from "@angular/forms";
 import moment from 'moment';
 import {catchError} from 'rxjs/operators';
 import {throwError} from 'rxjs';
+import { CoursesService } from '../services/courses.service';
+import { LoadingService } from '../loading/loading.service';
+import { MessagesService } from '../messages/messages.service';
+import { CoursesStore } from '../services/courses.store';
 
 @Component({
     selector: 'course-dialog',
     templateUrl: './course-dialog.component.html',
-    styleUrls: ['./course-dialog.component.css']
+    styleUrls: ['./course-dialog.component.css'],
+    providers:[
+        LoadingService,
+        MessagesService
+    ]
 })
 export class CourseDialogComponent implements AfterViewInit {
 
@@ -20,7 +28,9 @@ export class CourseDialogComponent implements AfterViewInit {
     constructor(
         private fb: FormBuilder,
         private dialogRef: MatDialogRef<CourseDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) course:Course) {
+        @Inject(MAT_DIALOG_DATA) course:Course, 
+        private coursesStore:CoursesStore,
+        private messagesService:MessagesService) {
 
         this.course = course;
 
@@ -30,7 +40,7 @@ export class CourseDialogComponent implements AfterViewInit {
             releasedAt: [moment(), Validators.required],
             longDescription: [course.longDescription,Validators.required]
         });
-
+        
     }
 
     ngAfterViewInit() {
@@ -40,6 +50,27 @@ export class CourseDialogComponent implements AfterViewInit {
     save() {
 
       const changes = this.form.value;
+      this.coursesStore.saveCourse(this.course.id, changes)
+      /* .pipe(
+        catchError(err => {
+            const message = "Could not save course.";
+            console.log(message, err);
+
+            this.messagesService.showErrors(message);
+
+            return throwError(err);
+        })
+      ) */
+      .subscribe();
+
+      this.dialogRef.close(changes);
+
+      /* this.loadingService.showLoaderUntilCompleted(saveCourses$)
+      .subscribe(
+        val => {
+            this.dialogRef.close(val);
+        }
+      ); */
 
     }
 

@@ -1,6 +1,7 @@
 export const COURSES: any = {
 
 
+
   17: {
     id: 17,
     description: 'Reactive Angular Course',
@@ -8,6 +9,19 @@ export const COURSES: any = {
     iconUrl: 'https://angular-university.s3-us-west-1.amazonaws.com/course-images/reactive-angular-course.jpg',
     courseListIcon: 'https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png',
     category: 'BEGINNER',
+    lessonsCount: 10,
+    seqNo: 0,
+    url: 'reactive-angular-course',
+    price: 50
+
+  },
+  18: {
+    id: 18,
+    description: 'Reactive Angular for Monkeys',
+    longDescription: 'How to build Angular applications in Reactive style using plain RxJs - Patterns and Anti-Patterns',
+    iconUrl: 'https://angular-university.s3-us-west-1.amazonaws.com/course-images/reactive-angular-course.jpg',
+    courseListIcon: 'https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png',
+    category: 'INTERMEDIATE',
     lessonsCount: 10,
     seqNo: 0,
     url: 'reactive-angular-course',
